@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: Use API
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          AUTH_TOKEN: $GITHUB_TOKEN
         run:
           python main.py
 
