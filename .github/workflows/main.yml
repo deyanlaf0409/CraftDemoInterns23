@@ -7,9 +7,9 @@ jobs:
     permissions:
       issues: read
     steps:
-      - name: Use API
         env:
           GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}
+          FRESHDESK_KEY: ${{ secrets.API_KEY }}
         run:
           python start.py
 
