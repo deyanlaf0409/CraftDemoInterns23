@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: Use API
         env:
-          AUTH_TOKEN: $GITHUB_TOKEN
+          GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}
         run:
           python start.py
 

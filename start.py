@@ -22,7 +22,7 @@ if __name__ == "__main__":
     freshdesk_api_key = "m63d39XmdjEJuMNKvYi"
     domain = "none8662"  # to get from user
     password = "x"
-    contact_info = {"name": user.name, "email": "api_v2_user4@example.com"}
+    contact_info = {"name": user.name, "email": "api_v2_user5@example.com"}
     headers = {"Content-Type": "application/json"}
 
     freshdesk_dump(domain, freshdesk_api_key, password, contact_info, headers)
