@@ -2,6 +2,7 @@ import argparse
 import os
 from github import Github
 from git_retrieve import get_user_info, get_user_repos
+from freshdesk_transfer import freshdesk_dump
 
 if __name__ == "__main__":
     # Parse command line arguments
@@ -10,9 +11,18 @@ if __name__ == "__main__":
     args = parser.parse_args()
     username = args.username
 
-    personal_access_token = os.environ.get('AUTH_TOKEN')
-    github_client = Github(personal_access_token)
 
-    get_user_info(github_client, username)
+    github_access_token = os.environ.get('AUTH_TOKEN')
+    github_client = Github(github_access_token)
+
+    user = get_user_info(github_client, username)
     get_user_repos(github_client, username)
 
+
+    freshdesk_api_key = "m63d39XmdjEJuMNKvYi"
+    domain = "none8662"  # to get from user
+    password = "x"
+    contact_info = {"name": user.name, "email": f"api_v2_user1@example.com"}
+    headers = {"Content-Type": "application/json"}
+
+    freshdesk_dump(domain, freshdesk_api_key, password, contact_info, headers)
