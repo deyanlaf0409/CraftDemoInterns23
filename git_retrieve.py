@@ -7,7 +7,6 @@ def get_user_info(github_client, username):
     return user
 
 
-
 def get_user_repos(github_client, username):
     user = github_client.get_user(username)
     print(f"{username}'s Repositories:")
