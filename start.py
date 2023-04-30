@@ -10,8 +10,9 @@ if __name__ == "__main__":
     github_access_token = os.environ.get('GITHUB_TOKEN')
     github_client = Github(github_access_token)
 
-    contact = get_user_info(github_client, username)
-    get_user_repos(github_client, username)
+    user = GitHubUser(github_client, username)
+    contact = user.get_contact_info()
+    user.print_info()
 
     # freshdesk_api_key = os.environ.get('FRESHDESK_TOKEN')
     # print(freshdesk_api_key)
