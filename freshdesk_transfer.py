@@ -22,7 +22,7 @@ def freshdesk_dump(domain, freshdesk_api_key, password, contact, headers):
     id = contact.get("unique_external_id")
 
     # Check if contact with same email already exists
-    url = f"https://{domain}.freshdesk.com/api/v2/contacts/{id}"
+    url = f"https://{domain}.freshdesk.com/api/v2/contacts?={id}"
     response = requests.get(url, auth=(freshdesk_api_key, password), headers=headers)
     print(response)
     if response.status_code == 200:
