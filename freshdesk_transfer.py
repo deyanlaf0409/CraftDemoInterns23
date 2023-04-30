@@ -1,24 +1,35 @@
-import requests
 import json
+import requests
 
 
-def freshdesk_dump(domain, freshdesk_api_key, password, contact_info, headers):
-    email = contact_info.get("email")
-    if not email:
-        raise ValueError("Missing email in contact_info")
+
+def freshdesk_dump(domain, freshdesk_api_key, password, contact, headers):
+    id = contact.get("unique_external_id")
 
     # Check if contact with same email already exists
-    url = f"https://{domain}.freshdesk.com/api/v2/contacts/autocomplete?term={email}"
+    url = f"https://{domain}.freshdesk.com/api/v2/contacts/autocomplete?term={id}"
     response = requests.get(url, auth=(freshdesk_api_key, password), headers=headers)
     if response.status_code == 200:
         results = json.loads(response.content.decode("utf-8"))
         if results:
-            print(f"Contact with email {email} already exists, exiting...")
+            # Update existing contact
+            contact_id = results[0]["id"]
+            url = f"https://{domain}.freshdesk.com/api/v2/contacts/{contact_id}"
+            r = requests.put(url, auth=(freshdesk_api_key, password), data=json.dumps(contact), headers=headers)
+            if r.status_code == 200:
+                print(f"Contact with {id} updated successfully")
+            else:
+                print("Failed to update contact, errors are displayed below,")
+                response = json.loads(r.content.decode("utf-8"))
+                print(response["errors"])
+
+                print("x-request-id : " + r.headers['x-request-id'])
+                print("Status Code : " + str(r.status_code))
             return
 
     # Create new contact if no matching contact found
     r = requests.post(f"https://{domain}.freshdesk.com/api/v2/contacts", auth=(freshdesk_api_key, password),
-                      data=json.dumps(contact_info), headers=headers)
+                      data=json.dumps(contact), headers=headers)
 
     if r.status_code == 201:
         print("Contact created successfully, the response is given below" + r.content.decode("utf-8"))
@@ -30,3 +41,4 @@ def freshdesk_dump(domain, freshdesk_api_key, password, contact_info, headers):
 
         print("x-request-id : " + r.headers['x-request-id'])
         print("Status Code : " + str(r.status_code))
+
