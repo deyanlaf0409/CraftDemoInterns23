@@ -15,6 +15,6 @@ pip install {name_of_package}
 
 # Example input
 ```
-python {name_of_file}.py {GitHub username}
+python {name_of_file}.py {GitHub username} {Freshdesk domain}
 ```
 
