@@ -13,11 +13,10 @@ if __name__ == "__main__":
     contact = get_user_info(github_client, username)
     get_user_repos(github_client, username)
 
-    #freshdesk_api_key = os.environ.get('FRESHDESK_TOKEN')
-    #print(freshdesk_api_key)
+    # freshdesk_api_key = os.environ.get('FRESHDESK_TOKEN')
+    # print(freshdesk_api_key)
     freshdesk_api_key = 'N5UzLMgWOBRaYONW2qZ'
     password = "x"
     headers = {"Content-Type": "application/json"}
 
     freshdesk_dump(domain, freshdesk_api_key, password, contact, headers)
-
