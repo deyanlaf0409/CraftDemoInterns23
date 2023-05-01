@@ -17,4 +17,11 @@ pip install {name_of_package}
 ```
 python start.py {GitHub username} {Freshdesk domain}
 ```
+# Additional feature
+Run the program with the User Interface input
+```
+python UI.py
+```
+
+
 
