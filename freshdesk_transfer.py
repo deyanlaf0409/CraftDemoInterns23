@@ -3,7 +3,7 @@ import requests
 
 
 def freshdesk_dump(domain, freshdesk_api_key, password, contact, headers):
-    name = contact.get("name")
+    # name = contact.get("name")
     unique_id = contact.get("unique_external_id")
     print(unique_id)
     url = f"https://{domain}.freshdesk.com/api/v2/contacts/{unique_id}"
@@ -50,7 +50,3 @@ def update_contact(domain, freshdesk_api_key, password, contact, headers, contac
 
         print("x-request-id : ", r.headers['x-request-id'])
         print("Status Code : ", r.status_code)
-
-
-
-

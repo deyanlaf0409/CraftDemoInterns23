@@ -25,12 +25,18 @@ class TestGitHubUser(unittest.TestCase):
         self.assertEqual(contact_info["unique_external_id"], self.github_user.user.id)
 
     def test_print_info(self):
-        self.github_user.get_contact_info = MagicMock(return_value={"name": "Test User", "description": "Test bio", "email": "test@example.com", "address": "Test address", "job_title": "Test company", "twitter_id": "testuser", "unique_external_id": 1234})
+        self.github_user.get_contact_info = MagicMock(return_value={"name": "Test User",
+                                                                    "description": "Test bio",
+                                                                    "email": "test@example.com",
+                                                                    "address": "Test address",
+                                                                    "job_title": "Test company",
+                                                                    "twitter_id": "testuser",
+                                                                    "unique_external_id": 1234})
         self.github_user.print_info()
         self.assertTrue(self.github_user.get_contact_info.called)
 
     def test_print_repos(self):
-        self.github_user.user.get_repos = MagicMock(return_value=[MagicMock(name="repo1", description="description1"), MagicMock(name="repo2", description="description2")])
+        self.github_user.user.get_repos = MagicMock(return_value=[MagicMock(name="repo1", description="description1"),
+                                                                  MagicMock(name="repo2", description="description2")])
         self.github_user.print_repos()
         self.assertTrue(self.github_user.user.get_repos.called)
-

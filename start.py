@@ -4,10 +4,14 @@ from git_retrieve import *
 from parse_user_input import parse_arguments
 from freshdesk_transfer import freshdesk_dump
 
+global dbusername, dbcontact, dbuser
+
 
 def launch(username=None, domain=None):
+    global dbusername, dbcontact, dbuser
     if username is None and domain is None:
         username, domain = parse_arguments()
+
 
     github_access_token = os.environ.get('GITHUB_TOKEN')
     github_client = Github(github_access_token)
@@ -16,6 +20,8 @@ def launch(username=None, domain=None):
     contact = user.get_contact_info()
     user.print_info()
 
+    dbusername, dbcontact, dbuser = username, contact, user
+
     # freshdesk_api_key = os.environ.get('FRESHDESK_TOKEN')
     # print(freshdesk_api_key)
     freshdesk_api_key = 'N5UzLMgWOBRaYONW2qZ'
@@ -23,6 +29,7 @@ def launch(username=None, domain=None):
     headers = {"Content-Type": "application/json"}
 
     freshdesk_dump(domain, freshdesk_api_key, password, contact, headers)
+
 
 if __name__ == "__main__":
     launch()
