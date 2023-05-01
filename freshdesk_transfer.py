@@ -1,23 +1,22 @@
-import json
 import requests
+import json
 
 
 def freshdesk_dump(domain, freshdesk_api_key, password, contact, headers):
-    # name = contact.get("name")
     unique_id = contact.get("unique_external_id")
     print(unique_id)
-    url = f"https://{domain}.freshdesk.com/api/v2/contacts/{unique_id}"
+    url = f"https://{domain}.freshdesk.com/api/v2/contacts?unique_external_id={unique_id}"
     response = requests.get(url, auth=(freshdesk_api_key, password), headers=headers)
     print(response)
     if response.status_code == 200:
         results = json.loads(response.content.decode("utf-8"))
-        print(results)
-        if results:
+        if results and len(results) > 0:
             contact_id = results[0]["id"]
             update_contact(domain, freshdesk_api_key, password, contact, headers, contact_id)
+        else:
+            create_contact(domain, freshdesk_api_key, password, contact, headers)
     else:
-        create_contact(domain, freshdesk_api_key, password, contact, headers)
-
+        print("Failed to fetch contact, status code:", response.status_code)
 
 
 def create_contact(domain, freshdesk_api_key, password, contact, headers):
