@@ -4,8 +4,10 @@ from git_retrieve import *
 from parse_user_input import parse_arguments
 from freshdesk_transfer import freshdesk_dump
 
-if __name__ == "__main__":
-    username, domain = parse_arguments()
+
+def launch(username=None, domain=None):
+    if username is None and domain is None:
+        username, domain = parse_arguments()
 
     github_access_token = os.environ.get('GITHUB_TOKEN')
     github_client = Github(github_access_token)
@@ -21,3 +23,6 @@ if __name__ == "__main__":
     headers = {"Content-Type": "application/json"}
 
     freshdesk_dump(domain, freshdesk_api_key, password, contact, headers)
+
+if __name__ == "__main__":
+    launch()

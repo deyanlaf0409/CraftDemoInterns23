@@ -7,3 +7,6 @@ def parse_arguments():
     parser.add_argument('domain', type=str, help='Freshdesk domain')
     args = parser.parse_args()
     return args.username, args.domain
+
+
+
